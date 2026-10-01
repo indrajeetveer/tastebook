@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const Abou = () => {
+const About = () => {
   return (
-    <div>Abou</div>
-  )
-}
+    <div>
+      <h1>This is an About page</h1>
+    </div>
+  );
+};
 
-export default Abou
+export default About;

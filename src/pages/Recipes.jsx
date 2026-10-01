@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const Racipies = () => {
   return (
-    <div>Racipies</div>
-  )
-}
+    <div>
+      <h1>This is an Recipes page</h1>
+    </div>
+  );
+};
 
-export default Racipies
+export default Racipies;
