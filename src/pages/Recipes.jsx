@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
+import { recipeContextdata } from "../context/RecipeContext";
 
 const Racipies = () => {
-  return (
-    <div>
-      <h1>This is an Recipes page</h1>
-    </div>
-  );
+  const { data } = useContext(recipeContextdata);
+
+  const renderdata = data.map((elem, idx) => {
+    return (
+      <div kay={idx}>
+        <h1>{elem.title}</h1>
+      </div>
+    );
+  });
+  return <div>{renderdata}</div>;
 };
 
 export default Racipies;

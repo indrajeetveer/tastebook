@@ -1,17 +1,20 @@
 import { nanoid } from "nanoid";
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { recipeContextdata } from "../context/RecipeContext";
 
 const Create = () => {
-  const { register, handleSubmit } = useForm();
+  const { data, setdata } = useContext(recipeContextdata);
+  const { register, handleSubmit, reset } = useForm();
 
-  const SubmitHandler = (data) =>{
-    data.id = nanoid()
-     console.log(data)
-  }
+  const SubmitHandler = (recipe) => {
+    recipe.id = nanoid();
+    setdata([...data, recipe]);
+    reset();
+  };
 
   return (
-    <form className="mx-50 my-15"  onSubmit={handleSubmit(SubmitHandler)}>
+    <form className="mx-50 my-15" onSubmit={handleSubmit(SubmitHandler)}>
       <input
         className="block border-b outline-0 p-5"
         {...register("image")}
@@ -28,7 +31,7 @@ const Create = () => {
         placeholder="Recipe Title"
       />
 
-       <input
+      <input
         className="block border-b outline-0 p-5"
         {...register("chef")}
         type="text"
@@ -54,12 +57,12 @@ const Create = () => {
       ></textarea>
 
       <select
-        className="border-b outline-0 p-5 block"
-        {...register('Category')}
+        className="border-b outline-0 p-5 block bg-black"
+        {...register("Category")}
       >
-          <option value="cat-1">Category-1</option>
-          <option value="cat-2">Category-2</option>
-          <option value="cat-3">Category-3</option>
+        <option value="cat-1">Category-1</option>
+        <option value="cat-2">Category-2</option>
+        <option value="cat-3">Category-3</option>
       </select>
 
       <button className="block mt-5 border px-2 py-1 rounded bg-zinc-900">
