@@ -1,30 +1,52 @@
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { recipeContextdata } from "../context/RecipeContext";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const SingleRecipe = () => {
-  const { register, handleSubmit, reset } = useForm();
-
-  const SubmitHandler = (recipe) => {};
-  const { data } = useContext(recipeContextdata);
+  const { data, setdata } = useContext(recipeContextdata);
   const params = useParams();
+  const navigate = useNavigate();
 
-  const recipe = data.find((recipe) => params.id == recipe.id);
-  console.log(data, params.id);
-  console.log(recipe);
+  const recipe = data.find((r) => r.id === params.id);
 
-  return recipe ? (
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      image: recipe?.image,
+      title: recipe?.title,
+      chef: recipe?.chef,
+      description: recipe?.description,
+      ingredients: recipe?.ingredients,
+      instructions: recipe?.instructions,
+      category: recipe?.category,
+    },
+  });
+
+  const SubmitHandler = (updated) => {
+    const index = data.findIndex((r) => r.id === params.id);
+    const copydata = [...data];
+    copydata[index] = { ...copydata[index], ...updated };
+    setdata(copydata);
+    toast.success("Recipe Updated");
+  };
+
+  const DeleteHandler = () => {
+    setdata(data.filter((r) => r.id !== params.id));
+    toast.success("Recipe Deleted");
+    navigate("/recipes");
+  };
+
+  if (!recipe) return "Loading";
+
+  return (
     <div className="w-full flex mt-10">
       <div className="left w-1/2 p-2">
-        <h1 className="text-5xl font-semibold ">{recipe.title}</h1>
+        <h1 className="text-5xl font-semibold">{recipe.title}</h1>
         <img className="h-[20vh]" src={recipe.image} alt="img" />
       </div>
 
-      <form
-        className="mx-50  w-1/2 p-2"
-        onSubmit={handleSubmit(SubmitHandler)}
-      >
+      <form className="w-1/2 p-2" onSubmit={handleSubmit(SubmitHandler)}>
         <input
           className="block border-b outline-0 p-5"
           {...register("image")}
@@ -32,10 +54,8 @@ const SingleRecipe = () => {
           placeholder="Enter image url"
         />
 
-        <small className="text-red-400">This is an how an error is shown</small>
-
         <input
-          className=" block border-b outline-0 p-5"
+          className="block border-b outline-0 p-5"
           {...register("title")}
           type="text"
           placeholder="Recipe Title"
@@ -57,13 +77,13 @@ const SingleRecipe = () => {
         <textarea
           className="border-b outline-0 p-5 block"
           {...register("ingredients")}
-          placeholder="Write ingredients seperated by comma"
+          placeholder="Write ingredients separated by comma"
         ></textarea>
 
         <textarea
           className="border-b outline-0 p-5 block"
           {...register("instructions")}
-          placeholder="Write instruction seperated by comma"
+          placeholder="Write instructions separated by comma"
         ></textarea>
 
         <select
@@ -76,13 +96,24 @@ const SingleRecipe = () => {
           <option value="dinner">Dinner</option>
         </select>
 
-        <button className="block mt-5 border px-2 py-1 rounded bg-zinc-900">
-          Save Recipe
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="submit"
+            className="mt-5 border px-2 py-1 rounded bg-blue-700"
+          >
+            Update Recipe
+          </button>
+
+          <button
+            type="button"
+            onClick={DeleteHandler}
+            className="mt-5 border px-2 py-1 rounded bg-red-600"
+          >
+            Delete Recipe
+          </button>
+        </div>
       </form>
     </div>
-  ) : (
-    "Loading"
   );
 };
 
