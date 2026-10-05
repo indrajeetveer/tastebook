@@ -57,13 +57,13 @@ const Create = () => {
 
       <textarea
         className="border-b outline-0 p-5 block"
-        {...register("instruction")}
+        {...register("instructions")}
         placeholder="Write instruction seperated by comma"
       ></textarea>
 
       <select
         className="border-b outline-0 p-5 block bg-black"
-        {...register("Category")}
+        {...register("category")}
       >
         <option value="breakfast">Breakfast</option>
         <option value="lunch">Lunch</option>

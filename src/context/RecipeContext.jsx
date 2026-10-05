@@ -3,8 +3,10 @@ import React, { createContext, useState } from "react";
 export const recipeContextdata = createContext(null);
 
 const RecipeContext = (props) => {
+
   const [data, setdata] = useState([
     {
+      id:"1",
       image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601",
       title: "Creamy Garlic Pasta",
       chef: "Indrajeet Veer",

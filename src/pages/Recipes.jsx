@@ -10,7 +10,7 @@ const Racipies = () => {
       <RecipeCard key={recipe.id} recipe={recipe}/>
     );
   });
-  return <div className="flex items-center justify-center gap-30 flex-wrap">{renderdata}</div>;
+  return <div className="flex items-center justify-center gap-20 flex-wrap">{data.length > 0 ? renderdata :'No recipes are found'}</div>;
 };
 
 export default Racipies;

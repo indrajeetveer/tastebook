@@ -12,8 +12,12 @@ const RecipeCard = (props) => {
     instructions,
     category,
   } = props.recipe;
+
   return (
-    <Link  to={`/recipes/details/${id}`} className=" mt-10 block w-[20vw] rounded overflow-hidden shadow ">
+    <Link
+      to={`/recipes/details/${id}`}
+      className="hover:scale-95 mt-10 block w-[20vw] rounded overflow-hidden shadow "
+    >
       <img className=" object-cover w-full h-[20vh]" src={image} alt="img" />
       <h1 className="text-white font-semibold text-xl px-2 mt-2">{title}</h1>
       <small className="px-2 text-red-400 text-sm">{chef}</small>
